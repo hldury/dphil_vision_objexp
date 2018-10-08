@@ -214,10 +214,16 @@ int main (int argc, char *argv[]){
 	model->spiking_synapses = conductance_spiking_synapses;
 
     // Creating an activity monitor for lif neurons
-    //value of proportion_of_device_spike_store_full_before_copy within SpikingActivityMonitor.hpp has been changed from 0.2 to 0.1
+    //value of proportion_of_device_spike_store_full_before_copy within SpikingActivityMonitor.hpp has been changed from 0.2 to 0.5
     SpikingActivityMonitor* spike_monitor = new SpikingActivityMonitor(lif_spiking_neurons);
+    spike_monitor->advanced_parameters->proportion_of_device_spike_store_full_before_copy = 0.20f;
+    spike_monitor->advanced_parameters->device_spike_store_size_multiple_of_total_neurons = 100;
+    spike_monitor->advanced_parameters->number_of_timesteps_per_device_spike_copy_check = 20;
     model->AddActivityMonitor(spike_monitor);
     SpikingActivityMonitor* input_spike_monitor = new SpikingActivityMonitor(input_neurons);
+    input_spike_monitor->advanced_parameters->proportion_of_device_spike_store_full_before_copy = 0.20f;
+    input_spike_monitor->advanced_parameters->device_spike_store_size_multiple_of_total_neurons = 100;
+    input_spike_monitor->advanced_parameters->number_of_timesteps_per_device_spike_copy_check = 20;
     model->AddActivityMonitor(input_spike_monitor);
 
 
@@ -487,6 +493,14 @@ int main (int argc, char *argv[]){
     model->run(presentation_time_per_stimulus_per_epoch_test, false); // false for plasticity_on
     model->spiking_neurons->reset_state();
     model->spiking_synapses->reset_state();
+
+	    // Setting output name
+  	string output_prefix = string("Initial_Output_") + string("_Stimulus_") + string(to_string(stimulus_index)) + string("_");
+ 	spike_monitor->save_spikes_as_binary(initpath + "/", output_prefix.c_str());
+ 	spike_monitor->reset_state();
+ 	 string input_prefix = string("Initial_Input_") + string("_Stimulus_") + string(to_string(stimulus_index)) + string("_");
+ 	input_spike_monitor->save_spikes_as_binary(initpath + "/", input_prefix.c_str());
+ 	input_spike_monitor->reset_state();
   }
   
 
