@@ -3,6 +3,7 @@
 // Note that the timestep can be set higher than usual for any period in which you want to generally test the network behaviour.
 float timestep = 0.0002;
 float original_timestep = 0.0000002;// 0.00002;//0.00002; //0.0000002; //it's actually 0.00002, but is multiplied by 0.001 as a dakota bug check
+
 const int number_of_layers = 4;
 
 
@@ -10,8 +11,8 @@ const int number_of_layers = 4;
 // NEXT LINE REMOVED FOR THIS VERSION OF DAKOTA!!!!
 //const int number_of_layers = 4;			// This value is explicitly assumed in this model. Not recommended to change unless you understand what else may need changing in this file.
 int max_number_of_connections_per_pair = 2; // The maximum number of connections refers to multiple synaptic contacts pre->post
-int dim_excit_layer = 64 / 2;			// The dimension of the excitatory layers (grid with this width)
-int dim_inhib_layer = 32 / 2;			// The dimension of the inhibitory layers (as above)
+int dim_excit_layer = 64;			// The dimension of the excitatory layers (grid with this width)
+int dim_inhib_layer = 32;			// The dimension of the inhibitory layers (as above)
 
 // G2E = Gabor to excitatory, E2E = excitatory to excitatory, E2I = excitatory to inhibitory, I2E = inhibitory to excitatory
 // FF = feed forward, L = Lateral, FB = Feedback
